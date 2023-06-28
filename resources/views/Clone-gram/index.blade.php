@@ -34,19 +34,6 @@
 <!-- コンテンツ -->
  <main>
 
-
-
-
-
-
-<button type="submit" name="edit_article">編集</button>
-<button type="submit" name="delete_article">削除</button>
-
-
-
-
-
-
 <!-- ハッシュタグで検索 -->
 <hr>
 <input type="text" name="search_tag" placeholder="#ハッシュタグで探す 例）#おうちごはん" size="50"><br>

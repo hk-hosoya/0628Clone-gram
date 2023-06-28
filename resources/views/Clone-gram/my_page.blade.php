@@ -35,34 +35,7 @@
  <main>
 
 
-
-
-
-
-<button type="submit" name="edit_article">編集</button>
-<button type="submit" name="delete_article">削除</button>
-
-
-
-
-
-
-<!-- ハッシュタグで検索 -->
-<hr>
-<input type="text" name="search_tag" placeholder="#ハッシュタグで探す 例）#おうちごはん" size="50"><br>
-<!-- アカウントで検索 -->
-<br>
-<input type="text" name="search_acount" placeholder="アカウントを探す 例）test_user " size="50"><br>
-
-
-<!-- 一覧画面 -->
 <!-- データ取得前のイメージ 構図-->
-<br>
-<b>test_user</b>2023/6/25
-
-
-<button type="submit" name="edit_article">編集</button>
-<button type="submit" name="delete_article">削除</button>
 
 
 </main>
