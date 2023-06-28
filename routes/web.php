@@ -1,10 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 //コントローラー
 use App\Http\Controllers\CloneGramController;
+
+
+//コントローラー
+use App\Http\Controllers\CloneGramController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +21,7 @@ use App\Http\Controllers\CloneGramController;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,39 +31,39 @@ Route::get('/', function () {
 Route::get('/Clone-gram/chat', [CloneGramController::class, 'chat']);
 
 
-/* Storage ファサードを使ってファイルの操作をしてみる */
-Route::get('storage_test', function () {
-    /* タイムスタンプを含めたテキストファイル名を作成 */
-    $filename = time() . '.txt';
-    /* テキストファイルの内容を作成 */
-    $content = "ファイル名: {$filename}";
-    /* Storage::put(<ファイルパス>, <内容>) で、ファイルを作成
-    * ファイル名だけ記載した場合は、操作対象のdisk の直下に作成される
-    */
-    Storage::put($filename, $content);
-    /* Storage::files(ファイルパス) で、ファイルの一覧を取得 */
-    $files = Storage::files();
-    dump($files);
-});
+
+//ホーム画面（一覧画面）表示
+Route::get('/Clone-gram/index', [CloneGramController::class, 'index'] );
 
 
-/* auth ミドルウェアが認証状態を判定してくれる */
-Route::group(['middleware' => ['auth']], function () {
-    /* 画像アップロードフォームを表示するルーティング */
-    Route::get('upload_form', function () {
-        return view('upload_form');
-    })->name('upload_form');
+ //投稿ページ
+Route::get('/Clone-gram/post_article', [CloneGramController::class, 'post_article'] );
 
-    Route::get('upload_images', function () {
-        return view('upload_images');
-    })->name('upload_images');
 
-    Route::get('update_mypage', function () {
-        return view('update_mypage');
-    })->name('update_mypage');
+//投稿した記事の編集画面
+Route::get('/Clone-gram/edit_article', [CloneGramController::class, 'edit_article'] );
 
-    /* ログイン中のみアクセスできるルーティングのサンプル */
-    Route::get('/users_only', function () {
-        return view('users_only');
-    });
-});
+
+//マイページ
+Route::get('/Clone-gram/my_page', [CloneGramController::class, 'my_page'] );
+
+
+//プロフィール編集画面
+Route::get('/Clone-gram/edit_profile', [CloneGramController::class, 'edit_profile'] );
+
+
+//プロフィール編集確認画面
+Route::get('/Clone-gram/confirm_profile', [CloneGramController::class, 'confirm_profile'] );
+
+
+//他ユーザーのページ
+Route::get('/Clone-gram/friends_page', [CloneGramController::class, 'friends_page'] );
+
+
+//フォロワー表示画面
+Route::get('/Clone-gram/follower', [CloneGramController::class, 'follower'] );
+
+
+//フォロ中のユーザーの表示画面
+Route::get('/Clone-gram/following', [CloneGramController::class, 'following'] );
+
