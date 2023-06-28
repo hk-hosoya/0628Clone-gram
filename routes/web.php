@@ -1,7 +1,9 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+//コントローラー
+use App\Http\Controllers\CloneGramController;
 
 
 //コントローラー
@@ -23,6 +25,11 @@ use App\Http\Controllers\CloneGramController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+//チャット画面表示
+Route::get('/Clone-gram/chat', [CloneGramController::class, 'chat']);
+
 
 
 //ホーム画面（一覧画面）表示
@@ -60,6 +67,3 @@ Route::get('/Clone-gram/follower', [CloneGramController::class, 'follower'] );
 //フォロ中のユーザーの表示画面
 Route::get('/Clone-gram/following', [CloneGramController::class, 'following'] );
 
-
-//チャット画面表示
-Route::get('/Clone-gram/chat', [CloneGramController::class, 'chat'] );
