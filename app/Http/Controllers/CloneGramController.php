@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//モデル
+use App\Models\User;
+use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Follower;
+
+
 class CloneGramController extends Controller
 {
     //ホーム画面（一覧画面）表示
