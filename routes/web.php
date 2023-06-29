@@ -2,9 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+
 //コントローラー
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CloneGramController;
+
+//モデル
+use App\Models\User;
+use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Follower;
 
 
 /*
