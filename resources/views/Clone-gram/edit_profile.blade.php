@@ -13,16 +13,17 @@
     <h1><a href="/Clone-gram/index">Clonegram</a></h1>
     <!-- ナビゲーション -->
     <nav>
-   
+
     <!-- 後々、マイページとログアウトそれぞれのフォームをつくる -->
 
 
-    <form action="/Clone-gram/index" method="get">  
+    <form action="/Clone-gram/index" method="get">
     <button type="submit">ホーム</button>
 </form>
 <br>
-    <form action="/Clone-gram/my_page" method="get">  
+    <form action="/Clone-gram/my_page" method="get">
     <button type="submit">マイページ</button>
+    @csrf
 </form>
 
 
@@ -35,6 +36,5 @@
 
  </head>
     ※マイページ（編集画面）だよ
-   
 </body>
 </html>

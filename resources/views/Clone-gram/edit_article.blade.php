@@ -13,22 +13,55 @@
     <nav>
    
     <!-- 後々ログアウトのフォームをつくる -->
-<form action="/Clone-gram/index" method="get">  
-    <button type="submit">ホーム</button>
-</form>
-<br>
+
+<!-- コンテンツ -->
+<main>
+    <form action="" method="POST" enctype="multipart/form-data" align="center">
+        <p align='center'>新規投稿を作成</p>
+
+        <div>
+            <label for="title">
+                <p>タイトル</p>
+                <input id="title" type="text" name="title">
+            </label>
+        </div>
+        <div>
+            <label for="image">
+                <p>写真を選択してください</p>
+                <input id="image" type="file" name="image">
+            </label>
+        </div>
+
+        <div>
+            <label for="memo">
+                <p>
+                <textarea name="memo" id="memo" placeholder="キャプションを入力..." cols="50" rows="10"></textarea>
+                </p>
+            </label>
+        </div>
+
+        <div>
+            <p>
+            <label for="hashtag">
+                <input type="text" name="search_tag" placeholder="#ハッシュタグで探す 例）#おうちごはん" size="50"><br>
+            </label>
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <input type='button' onclick="location.href='/Clone-gram/index'" value='キャンセル' size="30">
+
+                <input type="submit" value="シェアする" size="30">
+            </p>
+        </div>
+
+        @csrf
+    </form>
 
 
- <button type="submit">ログアウト</button>
+</main>
+@endsection
 
-
-    </nav>
-
-
- </head>
-    ※投稿編集ページだよ
-   
-</body>
-</html>
 
 
