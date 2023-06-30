@@ -11,42 +11,38 @@
     <h1><a href="/Clone-gram/index">Clonegram</a></h1>
     <!-- ナビゲーション -->
     <nav>
-   
+
     <!-- 後々ログアウトのフォームをつくる -->
 
 <!-- コンテンツ -->
 <main>
+
     <form action="" method="POST" enctype="multipart/form-data" align="center">
         <p align='center'>新規投稿を作成</p>
 
         <div>
             <label for="title">
-                <p>タイトル</p>
-                <input id="title" type="text" name="title">
+                <p>・タイトル{{$article->title}}</p>
+                <input id="title" type="text" name="title" placeholder="新しいタイトルを入力してください" size="50">
             </label>
         </div>
         <div>
             <label for="image">
-                <p>写真を選択してください</p>
+                <p>・写真<br>
+                <a href="{{$article->filepath}}" target="_blank"><img src='http://localhost/{{$article->filepath}}' width='200'></a></p>
+                <p>・新しい写真を選択してください</p>
                 <input id="image" type="file" name="image">
             </label>
         </div>
 
         <div>
             <label for="memo">
-                <p>
-                <textarea name="memo" id="memo" placeholder="キャプションを入力..." cols="50" rows="10"></textarea>
+                <p>・メモ{{$article->memo}}
+                <textarea name="memo" id="memo" placeholder="新しいメモを入力してください" cols="50" rows="10"></textarea>
                 </p>
             </label>
         </div>
 
-        <div>
-            <p>
-            <label for="hashtag">
-                <input type="text" name="search_tag" placeholder="#ハッシュタグで探す 例）#おうちごはん" size="50"><br>
-            </label>
-            </p>
-        </div>
 
         <div>
             <p>

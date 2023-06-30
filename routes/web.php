@@ -72,15 +72,15 @@ Route::get('/Clone-gram/confirm_profile', [CloneGramController::class, 'confirm_
 
 
 //他ユーザーのページ
-Route::get('/Clone-gram/friends_page', [CloneGramController::class, 'friends_page']);
+// Route::get('/Clone-gram/friends_page', [CloneGramController::class, 'friends_page']);
 
 
-//フォロワー表示画面
+// //フォロワー表示画面
 Route::get('/Clone-gram/follower', [CloneGramController::class, 'follower']);
 
 
-//フォロ中のユーザーの表示画面
-Route::get('/Clone-gram/following', [CloneGramController::class, 'following']);
+// //フォロ中のユーザーの表示画面
+// Route::get('/Clone-gram/following', [CloneGramController::class, 'following']);
 
 /* 画像アップロードフォームを表示するルーティング */
 // Route::get('/Clone-gram/add_article', [CloneGramController::class, 'add_article']);
@@ -97,7 +97,17 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* POST 送信された画像を受け取って保存するルーティング */
     Route::post('Clone-gram/add_article', [CloneGramController::class, 'upload']);
+
+    Route::get('Clone-gram/friends_page', [CloneGramController::class, 'index_friends'])
+        ->name('my_page');
+    Route::get('Clone-gram/my_page/delete', [CloneGramController::class, 'delete'])
+        ->name('delete');
 });
+//フォローする
+Route::post('Clone-gram/follower/{id}/follow', [CloneGramController::class, 'setFollow'])->name('follow');
+
+//フォロー解除する
+Route::post('Clone-gram/follower/{id}/unfollow', [CloneGramController::class, 'setUnfollow'])->name('unfollow');
 
 // /* Storage ファサードを使ってファイルの操作をしてみる */
 // Route::get('storage_test', function () {
