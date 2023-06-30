@@ -13,26 +13,26 @@
 <!-- コンテンツ -->
 <main>
 
-    <table border='1'>
+    <table border='1' align="center">
         <tr>
             <th>ユーザ名</th>
-            <th>ファイル名</th>
+            <th>タイトル</th>
             <th>画像</th>
-            <th>URL</th>
-            <th>備考</th>
-            <th></th>
+            <th>メモ</th>
+            <th>編集</th>
+            <th>削除</th>
+
         </tr>
         @foreach ($articles as $article)
             <tr>
                 <td>{{$article->user->name}}</td>
-                <td>{{$article->filename}}</td>
-                <td><a href="{{$article->filepath}}" target="_blank"><img src='{{$article->filepath}}' width='200'></a></td>
-                <td>http://localhost/{{$article->filepath}}</td>
+                <td>{{$article->title}}</td>
+                <td><a href="{{$article->filepath}}" target="_blank"><img src='http://localhost/{{$article->filepath}}' width='200'></a></td>
                 <td>{{$article->memo}}</td>
                 <td>
-                    <input type="button" value="編集">
-                    <input type="button" value="削除">
+                    <input type="button" value="編集" name="henshuu">
                 </td>
+                <td><input type="button" value="削除" name="sakuzyo"></td>
             </tr>
         @endforeach
     </table>

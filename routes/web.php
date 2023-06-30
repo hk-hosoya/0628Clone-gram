@@ -26,7 +26,6 @@ use App\Models\Follower;
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -43,15 +42,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-
-
 //チャット画面表示
 Route::get('/Clone-gram/chat', [CloneGramController::class, 'chat']);
 
 
 
 //ホーム画面（一覧画面）表示
-Route::get('/Clone-gram/index', [CloneGramController::class, 'index']);
+// Route::get('/Clone-gram/index', [CloneGramController::class, 'index']);
 
 
 //投稿ページ
@@ -86,10 +83,21 @@ Route::get('/Clone-gram/follower', [CloneGramController::class, 'follower']);
 Route::get('/Clone-gram/following', [CloneGramController::class, 'following']);
 
 /* 画像アップロードフォームを表示するルーティング */
-Route::get('/Clone-gram/add_article', [CloneGramController::class, 'add_article']);
+// Route::get('/Clone-gram/add_article', [CloneGramController::class, 'add_article']);
 
 /* POST 送信された画像を受け取って保存するルーティング */
-Route::post('/Clone-gram/add_article', [CloneGramController::class, 'upload']);
+Route::post('/Clone-gram/post_article', [CloneGramController::class, 'upload']);
+
+/* アップロードされた画像の一覧を表示するルーティング */
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('Clone-gram/index', [CloneGramController::class, 'index'])
+        ->name('index');
+    Route::get('Clone-gram/my_page', [CloneGramController::class, 'index_my'])
+        ->name('my_page');
+
+    /* POST 送信された画像を受け取って保存するルーティング */
+    Route::post('Clone-gram/add_article', [CloneGramController::class, 'upload']);
+});
 
 // /* Storage ファサードを使ってファイルの操作をしてみる */
 // Route::get('storage_test', function () {

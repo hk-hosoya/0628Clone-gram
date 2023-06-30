@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+/* Laravelの拡張クラス Str を読み込み */
+use Illuminate\Support\Str;
 
 //モデル
 use App\Models\User;
@@ -15,10 +17,43 @@ use App\Models\Follower;
 class CloneGramController extends Controller
 {
     //ホーム画面（一覧画面）表示
-    public function index()
+    public function index(Request $request)
     {
-        return view('Clone-gram.index');
+        /* Requestに送信された検索キーワードを変数に保持 */
+        $keyword = $request->input('keyword');
+        $search_account = $request->input('search_account');
+
+        /* 検索キーワードが入力されている場合、表示するデータを絞り込む */
+        if (Str::length($keyword) > 0) { // Str::length(<文字列>) で、文字列の長さを取得できる
+            $articles = Article::where('title', 'LIKE', "%$keyword%") // ファイル名にkeyword を含むものを絞り込み
+                ->orWhere('memo', 'LIKE', "%$keyword%") // 備考にkeyword を含むものを絞り込み
+                ->get();
+        } elseif (Str::length($search_account) > 0) {
+            $articles = Article::join('users', 'user_id', '=', 'users.id')
+                ->orWhere('name', 'LIKE', "%$search_account%")
+                ->get();
+        } else {
+            /* 検索キーワードが入力されていない場合は、全件取得する */
+            $articles = Article::all();
+        }
+
+        return view('Clone-gram.index', compact('keyword', 'articles', 'search_account'));
     }
+
+    public function index_my(Request $request)
+    {
+        $main_user = \Auth::user()->name;
+        $articles = Article::join('users', 'user_id', '=', 'users.id')
+            ->orWhere('name', 'LIKE', "%$main_user%")
+            ->get();
+
+        if ($request->has('henshuu')) {
+            $user = User::findOrFail($user_id);
+        }
+
+        return view('Clone-gram.my_page', compact('main_user', 'articles'));
+    }
+
 
     //投稿ページ
     public function post_article()
@@ -53,6 +88,7 @@ class CloneGramController extends Controller
     //マイページ
     public function my_page()
     {
+        $articles = Auth::user()->id;
         return view('Clone-gram.my_page');
     }
 
@@ -113,9 +149,21 @@ class CloneGramController extends Controller
          */
         $file_path = $request->image->store('images', 'public');
 
+        /* UploadImage オブジェクトを生成 */
+        $upload_image = new Article();
+        $upload_image->filename = $request->image->getClientOriginalName();
+        $upload_image->memo = $request->memo;
+        $upload_image->title = $request->title;
+        $upload_image->user_id = $request->user_id;
+        $upload_image->filepath = $file_path;
+
+        /* データベースにレコードを追加する */
+        $upload_image->save();
+
+
         /* 保存した画像を表示する */
         print("<img src='" . asset("$file_path") . "' width='300'>");
 
-        print("<a href='add_article'>画像投稿フォームに戻る</a>");
+        print("<a href='post_article'>画像投稿フォームに戻る</a>");
     }
 }

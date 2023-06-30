@@ -31,19 +31,20 @@
             </label>
         </div>
 
-        <div>
+        {{-- <div>
             <p>
             <label for="hashtag">
                 <input type="text" name="search_tag" placeholder="#ハッシュタグで探す 例）#おうちごはん" size="50"><br>
             </label>
             </p>
-        </div>
+        </div> --}}
 
         <div>
             <p>
                 <input type='button' onclick="location.href='/Clone-gram/index'" value='キャンセル' size="30">
 
                 <input type="submit" value="シェアする" size="30">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
             </p>
         </div>
 
