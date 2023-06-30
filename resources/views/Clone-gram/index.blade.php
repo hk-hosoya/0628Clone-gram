@@ -30,7 +30,9 @@
     </tr>
         @foreach ($articles as $article)
             <tr>
-                <td>{{$article->user->name}}</td>
+                <form action="friends_page" method="GET">
+            <td><input type='submit' name="user_friends" value="{{$article->user->name}}">
+            </td></form>
                 <td>{{$article->title}}</td>
                 <td><a href="{{$article->filepath}}" target="_blank"><img src='http://localhost/{{$article->filepath}}' width='200'></a></td>
                 <td>{{$article->memo}}</td>
