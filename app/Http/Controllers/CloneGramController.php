@@ -42,14 +42,13 @@ class CloneGramController extends Controller
 
     public function index_my(Request $request)
     {
+        // $articless = Article::all();
+        // dd($articless);
         $main_user = \Auth::user()->name;
-        $articles = Article::join('users', 'user_id', '=', 'users.id')
-            ->orWhere('name', 'LIKE', "%$main_user%")
+        $articles = Article::join('users', 'articles.user_id', '=', 'users.id')
+            ->where('name', 'LIKE', "%$main_user%")
             ->get();
-
-        if ($request->has('henshuu')) {
-            $user = User::findOrFail($user_id);
-        }
+        // dd($articles);
 
         return view('Clone-gram.my_page', compact('main_user', 'articles'));
     }
@@ -62,10 +61,15 @@ class CloneGramController extends Controller
     }
 
     //投稿した記事の編集画面
-    public function edit_article()
+    public function edit_article(Request $request)
     {
-        return view('Clone-gram.edit_article');
+
+        // dd($request->all());
+        $article = Article::findOrFail($request->henshuu);
+        return view('Clone-gram.edit_article', compact('main_user', 'article'));
     }
+
+
 
     //アカウント追加画面表示
     public function add_user()
@@ -106,16 +110,26 @@ class CloneGramController extends Controller
 
 
     //他ユーザーのページ
-    public function friends_page()
+    // public function friends_page()
+    // {
+    //     return view('Clone-gram.friends_page');
+    // }
+
+    public function index_friends(Request $request)
     {
-        return view('Clone-gram.friends_page');
+        $user = $request->input('user_friends');
+        $articles = Article::join('users', 'user_id', '=', 'users.id')
+            ->Where('name', 'LIKE', "%$user%")
+            ->get();
+
+        return view('Clone-gram.friends_page', compact('user', 'articles'));
     }
 
     //フォロワー表示画面
-    public function follower()
-    {
-        return view('Clone-gram.follower');
-    }
+    // public function follower()
+    // {
+    //     return view('Clone-gram.follower');
+    // }
 
     //フォロ中のユーザーの表示画面
     public function following()
@@ -165,5 +179,70 @@ class CloneGramController extends Controller
         print("<img src='" . asset("$file_path") . "' width='300'>");
 
         print("<a href='post_article'>画像投稿フォームに戻る</a>");
+    }
+    //follow.blade.phpにすべてのユーザー情報を取得
+    public function follower(User $user)
+    {
+        $all_users = $user->all();
+
+        return view('Clone-gram.follower', compact('all_users'));
+    }
+
+    // フォローする処理
+    public function setFollow(Request $request, $id)
+    {
+        //フォローしている側のユーザー
+        // $user = new User;
+        $follower = \Auth::user();
+
+        // フォローしているかチェック
+        // $is_following = $follower->isFollowing($request->user->id);
+        $is_following = $follower->isFollowing($id);
+
+        if (!$is_following) {
+            // フォローしていなければフォローする
+            // $follower->follow($request->user->id);
+            $follower->follow($id);
+            // $mes = "フォローしました。";
+            return redirect('/Clone-gram/follower');
+        } else {
+            // $mes = "フォロー済みです";
+            return redirect('/Clone-gram/follower');
+        }
+    }
+    /////////////////////////////////////////
+    // フォロー解除
+    public function setUnfollow(Request $request, $id)
+    {
+        //フォローしている側のユーザー
+        // $user = new User;
+        $follower = \Auth::user();
+
+        // フォローしているかチェック
+        // $is_following = $follower->isFollowing($request->user->id);
+        $is_following = $follower->isFollowing($id);
+
+        if ($is_following) {
+            // フォローしていなければフォローする
+            // $follower->follow($request->user->id);
+            $follower->unfollow($id);
+            // $mes = "フォローしました。";
+            return redirect('/Clone-gram/follower');
+        } else {
+            // $mes = "フォロー済みです";
+            return redirect('/Clone-gram/follower');
+        }
+    }
+    /**
+     * 削除処理
+     */
+    public function delete(Request $request)
+    {
+        $articleId = $request->input('article_id');
+        $article = Article::where('filepath', $articleId)->first();
+
+        $article->delete();
+
+        return redirect()->back()->with('success', '削除されました');
     }
 }

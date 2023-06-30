@@ -1,17 +1,39 @@
-<h2 align='center'>follower</h2>
+<h2 align='center'>follow
+</h2>
 @extends('layouts.base')
     @section('title')
-    follower
+    follow
     @endsection
 
     @section('content')
 
-<table border='1'align='center'>
+<table align='center'>
+<!-- フォロワーがいたらフォロワーを表示 -->
 
-        @foreach ($follwers as $follwer)
+        @foreach ($all_users as $user)
             <tr>
-                <td>{{$follwer->user->name}}</td>
-                <td><input type='button' value="フォローする"></td>
+                <td><b>{{$user->name}}</b></td>
+
+                @if(!Auth::user()->isFollowing($user->id))
+
+                <td>
+                <form action="{{ route('follow', ['id' => $user->id]) }}" method="post">
+                <button type='submit' class="btn btn-gradient-follow">フォローする</button>
+                @csrf
+                </form>
+                </td>
+
+                @else
+
+                <td>
+                <form action="{{ route('unfollow', ['id' => $user->id]) }}" method="post">
+                <button type='submit' class="btn btn-gradient-unfollow">フォローをはずす</button>
+                @csrf
+                </form>
+                </td>
+
+                @endif
+
             </tr>
 
     @endforeach

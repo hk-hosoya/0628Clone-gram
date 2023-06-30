@@ -19,20 +19,28 @@
             <th>タイトル</th>
             <th>画像</th>
             <th>メモ</th>
-            <th>編集</th>
-            <th>削除</th>
+            <th>編集・削除</th>
 
         </tr>
         @foreach ($articles as $article)
             <tr>
-                <td>{{$article->user->name}}</td>
+                <form action="friends_page" method="GET">
+            <td><input type='submit' name="user_friends" value="{{$article->user->name}}">
+            </td></form>
                 <td>{{$article->title}}</td>
                 <td><a href="{{$article->filepath}}" target="_blank"><img src='http://localhost/{{$article->filepath}}' width='200'></a></td>
                 <td>{{$article->memo}}</td>
-                <td>
-                    <input type="button" value="編集" name="henshuu" >
+                <form action="edit_article" method="get"><td>
+                    <input type="submit" value="編集" name="henshuu">
+                    <input type="hidden" name="article_path" value="{{$article->filepath}}">
+                </form>
+                    <form action="my_page/delete" method="GET">
+                        <input type="submit" value="削除">
+                        <input type="hidden" name="article_id" value="{{$article->filepath}}">
+                    </form>
                 </td>
-                <td><input type="button" value="削除" name="sakuzyo"></td>
+
+
             </tr>
         @endforeach
     </table>
