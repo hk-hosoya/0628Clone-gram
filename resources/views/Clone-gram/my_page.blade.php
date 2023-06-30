@@ -30,7 +30,7 @@
                 <td><a href="{{$article->filepath}}" target="_blank"><img src='http://localhost/{{$article->filepath}}' width='200'></a></td>
                 <td>{{$article->memo}}</td>
                 <td>
-                    <input type="button" value="編集" name="henshuu">
+                    <input type="button" value="編集" name="henshuu" >
                 </td>
                 <td><input type="button" value="削除" name="sakuzyo"></td>
             </tr>
